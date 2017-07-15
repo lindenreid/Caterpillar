@@ -1,11 +1,11 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\BodyPart.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\HUD.cs">
     <Files>
-      <File FileName="Assets\Scripts\CharacterMovement2D.cs" Line="19" Column="41" />
-      <File FileName="Assets\Scripts\PushComponent.cs" Line="16" Column="3" />
-      <File FileName="Assets\Scripts\BodyPart.cs" Line="16" Column="25" />
-      <File FileName="Assets\Scripts\HUD.cs" Line="7" Column="1" />
+      <File FileName="Assets\Scripts\CharacterMovement2D.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PushComponent.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\BodyPart.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\HUD.cs" Line="181" Column="34" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

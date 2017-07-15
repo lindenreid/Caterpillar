@@ -1,11 +1,11 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2008
-
-Project("{B36725E8-5115-0AE2-A6E8-5CE2E48D8193}") = "Caterpillar", "Assembly-CSharp-firstpass.csproj", "{74A86675-EB14-169A-E6F4-B3E1A8D8E99F}"
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caterpillar", "Assembly-CSharp-firstpass.csproj", "{74A86675-EB14-169A-E6F4-B3E1A8D8E99F}"
 EndProject
-Project("{B36725E8-5115-0AE2-A6E8-5CE2E48D8193}") = "Caterpillar", "Assembly-CSharp.csproj", "{723265C3-9C54-6FE0-9A48-50FC518DC079}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caterpillar", "Assembly-CSharp.csproj", "{723265C3-9C54-6FE0-9A48-50FC518DC079}"
 EndProject
-Project("{B36725E8-5115-0AE2-A6E8-5CE2E48D8193}") = "Caterpillar", "Assembly-CSharp-Editor.csproj", "{0314C2AA-7ECB-C0B4-0181-CC737B41C4AC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caterpillar", "Assembly-CSharp-Editor.csproj", "{0314C2AA-7ECB-C0B4-0181-CC737B41C4AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
