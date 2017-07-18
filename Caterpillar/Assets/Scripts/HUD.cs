@@ -24,10 +24,11 @@ public class HUD : MonoBehaviour {
     
     // Game references
     public CharacterMovement2D CharacterMovement;
+    public Transform Indicator;
 
     // Sharing
     private const string TWITTER_ADDRESS = "http://twitter.com/intent/tweet";
-    private const string TWEET_LANGUAGE = "en";
+    private const string FACEBOOK_ADDRESS = "https://www.facebook.com/sharer/sharer.php?u=https%3A//lindseyreid.itch.io/";
     private string tweetMsg = "Visit So Good Games at https://sogoodgames.itch.io/";
 
     // Internal
@@ -108,9 +109,12 @@ public class HUD : MonoBehaviour {
         }
     }
 
-    public void HandleShareButtonClicked()
+    public void HandleShareButtonClicked(int media)
     {
-        Application.OpenURL(TWITTER_ADDRESS + "?text=" + WWW.EscapeURL(tweetMsg));
+        if (media == 0)
+            Application.OpenURL(TWITTER_ADDRESS + "?text=" + WWW.EscapeURL(tweetMsg));
+        else
+            Application.OpenURL(FACEBOOK_ADDRESS);
     }
 
     public void HandleRestartButtonClicked()
@@ -149,6 +153,8 @@ public class HUD : MonoBehaviour {
         if (enter)
         { 
             currentCollisions.Insert(0, bodyPart); // insert at 0 & pop at 0 so that we always get most recent collision
+            Indicator.transform.position = bodyPart.transform.position;
+            Indicator.transform.SetParent(bodyPart.transform, true);
             EatMessage.SetActive(true);
         }
         else
