@@ -4,7 +4,7 @@ using System.Collections;
 [RequireComponent(typeof(Collider2D))]
 public class PushComponent : MonoBehaviour {
 
-	public float ShiftForce = 5.0f;
+	public float ShiftForce = 0.5f;
 	private Rigidbody2D rigidBody;
 
 	void Start()
@@ -14,7 +14,8 @@ public class PushComponent : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		rigidBody.AddForce(new Vector2(other.transform.right.x, other.transform.right.y) * ShiftForce, ForceMode2D.Impulse);
+		Vector2 force = new Vector2 (other.transform.right.x, other.transform.right.y) * ShiftForce * Time.deltaTime;
+		rigidBody.AddForce(force, ForceMode2D.Impulse);
 	}
 
 }

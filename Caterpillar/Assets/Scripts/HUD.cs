@@ -2,11 +2,11 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO; // data import
 
 public class HUD : MonoBehaviour {
 
     // UI
-	public GameObject EatMessage;
     public GameObject BodyImageHanger;
     public GameObject FinishButton;
     public GameObject EndGameUI;
@@ -25,19 +25,17 @@ public class HUD : MonoBehaviour {
     // Game references
     public CharacterMovement2D CharacterMovement;
     public Transform Indicator;
-
-    // Sharing
-    private const string TWITTER_ADDRESS = "http://twitter.com/intent/tweet";
-    private const string FACEBOOK_ADDRESS = "https://www.facebook.com/sharer/sharer.php?u=https%3A//lindseyreid.itch.io/";
-    private string tweetMsg = "Visit So Good Games at https://sogoodgames.itch.io/";
+	public ReactionText ReactionText;
+	public string ReactionTextFileName = "eatlines.json";
 
     // Internal
     private bool controlsEnabled = false; // please set with SetControlsEnabled
     private ArrayList currentCollisions;
     private List<BodyPart> bodyPartsCollected;
     // references to instantiated body part images, for easy clean-up upon restart
-    private List<GameObject> bodyPartGOs;
+    private Dictionary<GameObject, BodyPartType> bodyPartGOs;
     private List<GameObject> endUIbodyPartGOs;
+	private List<string> reactionTextList;
 
 
     // ----- Monobehavior ----- 
@@ -49,8 +47,10 @@ public class HUD : MonoBehaviour {
         currentCollisions = new ArrayList();
         bodyPartsCollected = new List<BodyPart>();
 
-        bodyPartGOs = new List<GameObject>();
+		bodyPartGOs = new Dictionary<GameObject, BodyPartType>();
         endUIbodyPartGOs = new List<GameObject>();
+
+		ImportReactionText ();
     }
 
     void Update()
@@ -73,7 +73,6 @@ public class HUD : MonoBehaviour {
     {
         // disable game
         BodyImageHanger.SetActive(false);
-        EatMessage.SetActive(false);
         FinishButton.SetActive(false);
 
         SetControlsEnabled(false);
@@ -109,13 +108,6 @@ public class HUD : MonoBehaviour {
         }
     }
 
-    public void HandleShareButtonClicked(int media)
-    {
-        if (media == 0)
-            Application.OpenURL(TWITTER_ADDRESS + "?text=" + WWW.EscapeURL(tweetMsg));
-        else
-            Application.OpenURL(FACEBOOK_ADDRESS);
-    }
 
     public void HandleRestartButtonClicked()
     {
@@ -131,7 +123,7 @@ public class HUD : MonoBehaviour {
         FinishButton.SetActive(false);
 
         // clear body part UI
-        foreach (GameObject obj in bodyPartGOs)
+		foreach (GameObject obj in bodyPartGOs.Keys)
             Destroy(obj);
         bodyPartGOs.Clear();
 
@@ -153,15 +145,12 @@ public class HUD : MonoBehaviour {
         if (enter)
         { 
             currentCollisions.Insert(0, bodyPart); // insert at 0 & pop at 0 so that we always get most recent collision
-            Indicator.transform.position = bodyPart.transform.position;
+			Indicator.transform.position = bodyPart.transform.position;
             Indicator.transform.SetParent(bodyPart.transform, true);
-            EatMessage.SetActive(true);
         }
         else
         {
             currentCollisions.Remove(bodyPart);
-            if(currentCollisions.Count < 1)
-                EatMessage.SetActive(false);
         }
 	}
 
@@ -170,18 +159,37 @@ public class HUD : MonoBehaviour {
 
     private void TryEatBodyPart(BodyPart bodyPart)
     {
-        if (AlreadyHaveBodyPart(bodyPart.Type))
-            return;
-        bodyPartsCollected.Add(bodyPart);
+		if (AlreadyHaveBodyPart (bodyPart.Type))
+		{
+			// remove old part from UI
+			foreach (GameObject obj in bodyPartGOs.Keys) {
+				if (bodyPartGOs [obj] == bodyPart.Type) {
+					bodyPartGOs.Remove (obj);
+					Destroy(obj);
+					break;
+				}
+			}
+			// remove from list of items collected
+			foreach (BodyPart part in bodyPartsCollected){
+				if (part.Type == bodyPart.Type) {
+					part.gameObject.SetActive (true); // re-enable part
+					bodyPartsCollected.Remove (part);
+					break;
+				}
+		     }
+		}
 
-        bodyPart.gameObject.SetActive(false);
+		bodyPartsCollected.Add(bodyPart);
+		bodyPart.gameObject.SetActive(false);
 
         GameObject bodyObject = Instantiate(BodyPartImagePrefab, BodyImageHanger.transform.position, Quaternion.identity);
         bodyObject.GetComponent<Image>().sprite = bodyPart.Sprite;
         bodyObject.GetComponent<Image>().preserveAspect = true;
         bodyObject.transform.SetParent(BodyImageHanger.transform, false);
 
-        bodyPartGOs.Add(bodyObject);
+		bodyPartGOs.Add(bodyObject, bodyPart.Type);
+
+		ReactionText.Show(reactionTextList[Random.Range(0, reactionTextList.Count - 1)]);
 
         if (!FinishButton.activeSelf)
             FinishButton.SetActive(true);
@@ -203,4 +211,26 @@ public class HUD : MonoBehaviour {
         CharacterMovement.enabled = enable;
     }
 
+	private class ReactionTextList{
+		public List<string> lines;
+	}
+
+	private void ImportReactionText()
+	{
+		string filePath = Path.Combine (Application.streamingAssetsPath, ReactionTextFileName);
+
+		if (File.Exists (filePath)) {
+			string dataString = File.ReadAllText (filePath);
+			ReactionTextList textListobj = JsonUtility.FromJson<ReactionTextList>(dataString);
+
+			reactionTextList = new List<string> ();
+			for(int i= 0; i < textListobj.lines.Count; i++)
+			{
+				string text = textListobj.lines[i];
+				reactionTextList.Add(text);
+			}
+		} else {
+			Debug.LogError("Unable to find reaction text data file.");
+		}
+	}
 }
