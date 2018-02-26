@@ -65,6 +65,7 @@ public class HUD : MonoBehaviour {
 
     public void HandleBeginButtonClicked()
     {
+        currentCollisions.Clear(); // this shouldn't have to be here, it's a hack because i automatically register 9 collisions upon starting the game and IDK WHY???
         SetControlsEnabled(true);
         TitleScreen.GetComponent<FadeComponent>().StartFadeOut();
     }
@@ -188,6 +189,8 @@ public class HUD : MonoBehaviour {
         bodyObject.transform.SetParent(BodyImageHanger.transform, false);
 
 		bodyPartGOs.Add(bodyObject, bodyPart.Type);
+
+        bodyObject.GetComponent<Draggable>().draggable = false;
 
 		ReactionText.Show(reactionTextList[Random.Range(0, reactionTextList.Count - 1)]);
 
