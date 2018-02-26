@@ -11,6 +11,7 @@ public class HUD : MonoBehaviour {
     public GameObject FinishButton;
     public GameObject EndGameUI;
     public GameObject TitleScreen;
+    public GameObject ScreenshotInfo;
 
     // Endgame body part hangers
     public Transform Hanger_Head;
@@ -154,6 +155,13 @@ public class HUD : MonoBehaviour {
             currentCollisions.Remove(bodyPart);
         }
 	}
+
+    public void Screenshot(string filename)
+    {
+        ScreenshotInfo.SetActive(true);
+        ScreenshotInfo.GetComponent<FadeComponent>().StartFadeIn();
+        ScreenshotInfo.GetComponentInChildren<Text>().text = "Screenshot saved to " + filename;
+    }
 
 
     // ----- Private functions ----- 

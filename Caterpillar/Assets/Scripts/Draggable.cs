@@ -6,7 +6,10 @@ public class Draggable : MonoBehaviour {
 
 	public void OnDrag(){ 
         if (draggable)
-            transform.position = Input.mousePosition; 
+        {
+            Vector3 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            transform.position = new Vector3(mouse.x, mouse.y, transform.position.z); 
+        }
 	}
 
 }
