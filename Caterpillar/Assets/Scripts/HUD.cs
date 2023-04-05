@@ -11,7 +11,6 @@ public class HUD : MonoBehaviour {
     public GameObject FinishButton;
     public GameObject EndGameUI;
     public GameObject TitleScreen;
-    public GameObject ScreenshotInfo;
 
     // Endgame body part hangers
     public Transform Hanger_Head;
@@ -171,14 +170,6 @@ public class HUD : MonoBehaviour {
         }
 	}
 
-    public void Screenshot(string filename)
-    {
-        ScreenshotInfo.SetActive(true);
-        ScreenshotInfo.GetComponent<FadeComponent>().StartFadeIn();
-        ScreenshotInfo.GetComponentInChildren<Text>().text = "Screenshot saved to " + filename;
-    }
-
-
     // ----- Private functions ----- 
 
     private void TryEatBodyPart(BodyPart bodyPart)
@@ -243,20 +234,54 @@ public class HUD : MonoBehaviour {
 
 	private void ImportReactionText()
 	{
-		string filePath = Path.Combine (Application.streamingAssetsPath, ReactionTextFileName);
-
-		if (File.Exists (filePath)) {
-			string dataString = File.ReadAllText (filePath);
-			ReactionTextList textListobj = JsonUtility.FromJson<ReactionTextList>(dataString);
-
-			reactionTextList = new List<string> ();
-			for(int i= 0; i < textListobj.lines.Count; i++)
-			{
-				string text = textListobj.lines[i];
-				reactionTextList.Add(text);
-			}
-		} else {
-			Debug.LogError("Unable to find reaction text data file.");
-		}
+		reactionTextList = new List<string> (){
+            "wowzers. :0",
+            "hubba hubba.",
+            "i'm gonna be the most beautiful boy on the block.",
+            "just call me Gerge Clooners ;0",
+            "i am so HORNGRY",
+            "gimme dat sexy exoskeleton",
+            "every girl's crazy bout a sharp dressed man.",
+            "this makes me feel like Soldier 69.",
+            "yummy~",
+            "deeeelish!",
+            "nomnomnom",
+            "THIS is how to be beautiful.",
+            "will this make me feel good about myself?",
+            "this is How To Man",
+            "Cosmo makes the rules.",
+            "All hail lord GQ",
+            "NOM",
+            "*crunch*",
+            "i love the cronch",
+            "mmm... tender...",
+            "VALIDATE ME",
+            "make me a beautiful boy plz!!!",
+            "*slurp*",
+            "you are what you eat!!",
+            "CONSUME AND BECOME",
+            "what is a man?",
+            "a man is a collection of bOdY pArTs",
+            "ooh!;0",
+            "unf",
+            "ahhh;)",
+            "huuuuuhhhhf",
+            "asDAHGASHDGH",
+            "helP",
+            "i want to be a MAYNE",
+            "a MANLY MAN",
+            "oh he's 6 foot YES",
+            "slice me a piece of that CAKE",
+            "this won't hurt;)",
+            "FEED THE SOUL TO THE ELDER GODS",
+            "TAKE YOUR HEART",
+            "i will steal ur heart bby",
+            "i will steal ur heart nd ur body",
+            "C O N S U M E",
+            "daddy af",
+            ";0;0;0;0",
+            "i ate the sherrif",
+            "but i did not eat the deputee"
+        };
 	}
 }
