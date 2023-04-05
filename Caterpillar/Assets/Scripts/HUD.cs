@@ -38,6 +38,8 @@ public class HUD : MonoBehaviour {
     private List<GameObject> endUIbodyPartGOs;
 	private List<string> reactionTextList;
 
+    private Draggable currentlyClickedDraggable;
+
 
     // ----- Monobehavior ----- 
 
@@ -59,6 +61,11 @@ public class HUD : MonoBehaviour {
         if(controlsEnabled && Input.GetKeyUp(KeyCode.Space) && currentCollisions.Count > 0)
         {
             TryEatBodyPart(currentCollisions[0] as BodyPart);
+        }
+
+        if(!controlsEnabled && currentlyClickedDraggable != null && Input.GetKeyDown("r"))
+        {
+            currentlyClickedDraggable.Rotate();
         }
     }
 
@@ -104,12 +111,15 @@ public class HUD : MonoBehaviour {
             bodyObject.GetComponent<Image>().preserveAspect = true;
             bodyObject.transform.SetParent(hanger, false);
 
+            Draggable draggable = bodyObject.GetComponent<Draggable>();
+            draggable.draggable = true;
+            draggable.SetHUD(this);
+
             bodyObject.GetComponent<FadeComponent>().StartFadeIn();
 
             endUIbodyPartGOs.Add(bodyObject);
         }
     }
-
 
     public void HandleRestartButtonClicked()
     {
@@ -138,6 +148,11 @@ public class HUD : MonoBehaviour {
 
         // enable controls
         SetControlsEnabled(true);
+    }
+
+    public void OnBodyPartDrag (Draggable d)
+    {
+        currentlyClickedDraggable = d;
     }
 
     // ----- Public functions ----- 
