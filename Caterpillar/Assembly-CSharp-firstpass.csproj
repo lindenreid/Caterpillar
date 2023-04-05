@@ -726,11 +726,11 @@
     <Reference Include="Unity.Rider.Editor">
         <HintPath>D:\GitHub\Caterpillar\Caterpillar\Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UI">
-        <HintPath>D:\GitHub\Caterpillar\Caterpillar\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.SpatialTracking">
         <HintPath>D:\GitHub\Caterpillar\Caterpillar\Library\ScriptAssemblies\UnityEngine.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+        <HintPath>D:\GitHub\Caterpillar\Caterpillar\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Services.Core">
         <HintPath>D:\GitHub\Caterpillar\Caterpillar\Library\ScriptAssemblies\Unity.Services.Core.dll</HintPath>

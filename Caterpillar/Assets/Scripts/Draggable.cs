@@ -4,9 +4,11 @@ public class Draggable : MonoBehaviour {
 
     public bool draggable = true;
     private HUD hud;
+    private Vector3 originalScale;
 
     public void SetHUD (HUD hud) {
         this.hud = hud;
+        originalScale = transform.localScale;
     }
 
 	public void OnDrag(){ 
@@ -23,6 +25,14 @@ public class Draggable : MonoBehaviour {
 
     public void Rotate () {
         transform.Rotate(new Vector3(0, 0, 45), Space.Self);
+    }
+
+    public void Scale(bool up) {
+        if(up) {
+            transform.localScale = transform.localScale * 1.5f;
+        } else {
+            transform.localScale = transform.localScale / 1.5f;
+        }
     }
 
 }

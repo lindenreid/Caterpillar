@@ -62,9 +62,20 @@ public class HUD : MonoBehaviour {
             TryEatBodyPart(currentCollisions[0] as BodyPart);
         }
 
-        if(!controlsEnabled && currentlyClickedDraggable != null && Input.GetKeyDown("r"))
+        if(!controlsEnabled && currentlyClickedDraggable != null)
         {
-            currentlyClickedDraggable.Rotate();
+            if(Input.GetKeyDown("r"))
+            {
+                currentlyClickedDraggable.Rotate();
+            }
+            else if(Input.GetKeyDown("d"))
+            {
+                currentlyClickedDraggable.Scale(true);
+            }
+            else if(Input.GetKeyDown("a"))
+            {
+                currentlyClickedDraggable.Scale(false);
+            }
         }
     }
 
